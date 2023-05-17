@@ -1,0 +1,124 @@
+@page "/test-page"
+@using ProjectModels
+@inject IJSRuntime _JsRuntime
+
+<h3>Products page122 <small class="fs-6"> (@favCount favorites) </small></h3>
+
+
+<button @onclick="confirmMsg" class="btn btn-primary">Are you sure ?</button>
+
+<div class="row">
+
+    @foreach (Product _p in _products)
+    {
+        <div class="col-sm-6">
+            <div class="border p-2">
+                <ProductComponent OnFavoriteSelection="(val)=> AddToFavorite(val) " Product="@_p" ></ProductComponent>
+            </div>
+        </div>
+    }
+
+</div>
+
+@code {
+
+    public int favCount = 0; 
+    
+     
+    
+    public void AddToFavorite(bool selected)
+    {
+        if(selected)
+        {
+            favCount++;
+        }
+        else
+        {
+            favCount--;
+        }
+        Console.WriteLine("Count : " + favCount);
+    }
+
+    public async void confirmMsg()
+    {
+        await _JsRuntime.Swal("success", "Do you want to confirm2 ?");
+    }
+
+    readonly List<Product> _products = new();
+    
+    protected override void OnInitialized()
+    {
+ 
+        _products.Add(new Product
+        {
+            id = 1,
+            title = "Product 1",
+            price = 1.2,
+            isActive = true,
+            ProductSummary = new()
+            {
+                new ProductProperties()
+                {
+                    Id=1,
+                    Key="prop1",
+                    Value = "val1"
+                }, 
+                new ProductProperties()
+                {
+                    Id=2,
+                    Key="prop2",
+                    Value = "val2"
+                }
+            }
+        });
+
+        _products.Add(new Product
+        {
+            id = 2,
+            title = "Product 2",
+            price = 2.2,
+            isActive = false,
+            ProductSummary = new()
+            {
+                new ProductProperties()
+                {
+                    Id=3,
+                    Key="prop12",
+                    Value = "val12"
+                },  
+                new ProductProperties()
+                {
+                    Id=4,
+                    Key="prop22",
+                    Value = "val22"
+                }
+            }
+        });
+
+        _products.Add(new Product
+        {
+            id = 3,
+            title = "Product 3",
+            price = 3.2,
+            isActive = true,
+            ProductSummary = new()
+            {
+                new ProductProperties()
+                {
+                    Id=5,
+                    Key="prop1",
+                    Value = "val1"
+                }, 
+                new ProductProperties()
+                {
+                    Id=6,
+                    Key="prop1",
+                    Value = "val1"
+                }, 
+            }
+        });
+    }
+
+    // new Product
+
+}

@@ -1,0 +1,75 @@
+@using ProjectModels
+
+
+<h1>   @Product.title  <i class="fa fa-star"></i> </h1>
+<label> Favorite: </label>
+<input type="checkbox" @onchange=" FavoriteUpdated " />
+<table>
+    <tr>
+        <td>
+            Active
+        </td>
+        <td>
+            <input type="checkbox" @bind="Product.isActive" name="check" @bind:event="oninput">
+        </td>
+    </tr>
+</table>
+
+@if (Product.isActive)
+{
+        
+    <div class="row">
+        <div class="col-6">
+            <ul>
+                <li> Product: @Product.id</li>
+                <ul>
+                    <li> Name: @Product.title </li>
+                    <li> Price: @Product.price </li>
+                </ul>
+                <li>
+                    <label> Product is @(Product.isActive ? "Active" : "Inactive")</label>
+                </li>
+                <li>
+                    Product Summary
+                    <ul>
+                        @foreach (var _pd in Product.ProductSummary)
+                        {
+                            <li> @_pd.Id - @_pd.Key : @_pd.Value</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div> 
+        <div class="col-6">
+
+            <table>
+                <tr>
+                    <td>Name : </td>
+                    <td><input type="text" @bind="Product.title" @bind:event="oninput"/></td>
+                </tr>
+                <tr>
+                    <td>Price : </td>
+                    <td><input type="text" @bind="Product.price" @bind:event="oninput"/></td>
+                </tr>
+            </table>
+
+        </div>
+        
+    </div>
+
+}
+
+@code {
+    
+    [Parameter]
+    public Product Product { get; set; }
+
+
+    [Parameter]
+    public EventCallback<bool> OnFavoriteSelection { get; set; }
+    private async Task FavoriteUpdated(ChangeEventArgs e)
+    {
+        await OnFavoriteSelection.InvokeAsync( (bool) e.Value);
+    }
+
+}
