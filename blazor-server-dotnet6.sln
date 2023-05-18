@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1705.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor-server-dotnet6", "blazor-server-dotnet6\blazor-server-dotnet6.csproj", "{90996A38-F977-44AF-ABF6-823483774B4D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectModels", "ProjectModels\ProjectModels.csproj", "{FB6596C3-2E8E-4712-AE7F-792B496EB33D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAssemplyApp", "WebAssemplyApp\WebAssemplyApp.csproj", "{216C1BDB-D1BF-4508-9A96-510DE46B95FE}"
@@ -15,16 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBusiness", "BlazorBus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorDataAccess", "BlazorDataAccess\BlazorDataAccess.csproj", "{3090D7FB-5C3E-4ACA-B052-029148C5D5A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServer", "BlazorServer\BlazorServer.csproj", "{5CD200DA-4798-4024-9F16-20D73B12E3F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90996A38-F977-44AF-ABF6-823483774B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90996A38-F977-44AF-ABF6-823483774B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90996A38-F977-44AF-ABF6-823483774B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90996A38-F977-44AF-ABF6-823483774B4D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB6596C3-2E8E-4712-AE7F-792B496EB33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB6596C3-2E8E-4712-AE7F-792B496EB33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB6596C3-2E8E-4712-AE7F-792B496EB33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{3090D7FB-5C3E-4ACA-B052-029148C5D5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3090D7FB-5C3E-4ACA-B052-029148C5D5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3090D7FB-5C3E-4ACA-B052-029148C5D5A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CD200DA-4798-4024-9F16-20D73B12E3F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CD200DA-4798-4024-9F16-20D73B12E3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CD200DA-4798-4024-9F16-20D73B12E3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CD200DA-4798-4024-9F16-20D73B12E3F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

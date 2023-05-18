@@ -1,0 +1,28 @@
+@page "/categories/create"
+@using ProjectModels
+@using BlazorBusiness.Repository
+@using BlazorBusiness.Repository.IRepoository
+@inject ICategoryRepository _categoryRepository
+<h3>Create</h3>
+
+<EditForm Model="_Category" OnSubmit="CreateCategory">
+    
+    <input type="text" @bind="_Category.Name" placeholder="Enter Name" @bind:event="oninput">
+     @_Category.Name 
+    <button class="btn btn-success"> Create</button>
+</EditForm>
+
+
+@code {
+
+    public CategoryDTO _Category = new CategoryDTO();
+
+    public void CreateCategory()
+    {
+        Console.WriteLine("will create ");
+        Console.Write(_Category.Name);
+        _categoryRepository.Create(_Category);
+    }
+    
+
+}

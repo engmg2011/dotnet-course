@@ -1,6 +1,6 @@
 using ProjectModels;
 
-namespace BlazorBusiness.Repository;
+namespace BlazorBusiness.Repository.IRepoository;
 
 public interface ICategoryRepository
 {

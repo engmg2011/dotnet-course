@@ -1,5 +1,5 @@
 using AutoMapper;
-using BlazorBusiness.Mapper;
+using BlazorBusiness.Repository.IRepoository;
 using BlazorDataAccess;
 using BlazorDataAccess.DataAccess;
 using ProjectModels;
@@ -11,7 +11,7 @@ public class CategoryRepository : ICategoryRepository
     private readonly ApplicationDbContext _db;
     private readonly IMapper _mapper;
 
-    CategoryRepository(ApplicationDbContext db, IMapper mapper)
+    public CategoryRepository(IMapper mapper, ApplicationDbContext db)
     {
         _db = db;
         _mapper = mapper;
@@ -24,7 +24,7 @@ public class CategoryRepository : ICategoryRepository
         _db.SaveChanges();
         return _mapper.Map<Category, CategoryDTO>(addedObj.Entity);
     }
-
+    
     public CategoryDTO Update(CategoryDTO objDTO)
     {
         var objFromDb = _db.Categories.FirstOrDefault((c)=>c.Id == objDTO.Id);
@@ -36,7 +36,7 @@ public class CategoryRepository : ICategoryRepository
         }
         return objDTO;
     }
-
+    
     public int Delete(int id)
     {
         Category category = _mapper.Map<CategoryDTO, Category>(Get(id));
@@ -44,7 +44,7 @@ public class CategoryRepository : ICategoryRepository
         _db.SaveChanges();
         return category.Id;
     }
-
+    
     public CategoryDTO Get(int id)
     {
         var obj = _db.Categories.FirstOrDefault((c)=>c.Id == id);
@@ -54,10 +54,9 @@ public class CategoryRepository : ICategoryRepository
         }
         return new CategoryDTO();
     }
-
+    
     public IEnumerable<CategoryDTO> GetAll()
     {
         return _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_db.Categories);
     }
-    
 }

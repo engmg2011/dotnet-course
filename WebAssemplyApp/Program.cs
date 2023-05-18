@@ -1,3 +1,5 @@
+using BlazorBusiness.Repository;
+using BlazorBusiness.Repository.IRepoository;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WebAssemplyApp;
@@ -7,19 +9,6 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-// WebAssemplyApp.Program.Main();
 await builder.Build().RunAsync();
-
-//
-// namespace WebAssemplyApp
-// {
-//     class Program
-//     {
-//         public static void Main()
-//         {
-//             Console.WriteLine("hello Gemy 2, How are you ?");
-//             
-//         }
-//     }
-// }
