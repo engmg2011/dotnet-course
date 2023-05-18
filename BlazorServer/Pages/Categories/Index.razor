@@ -38,8 +38,11 @@ else
                 <td>@category.Name</td>
                 <td>
                     <a href="/categories/@category.Id" class="btn btn-primary">Edit</a>
-                    <button @onclick="() => Delete(category.Id)" class="btn btn-danger">Delete</button>
+                    <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#category-@category.Id">Delete</button>
                 </td>
+                 
+                <!-- Modal -->
+                <DeleteConfirm category="category" GetData="GetData"></DeleteConfirm>
             </tr>
         }
         </tbody>
@@ -60,9 +63,4 @@ else
         _Categories = _CategoryRepository.GetAll();
     }
 
-    private void Delete(int Id)
-    {
-        _CategoryRepository.Delete(Id);
-        GetData();
-    }
 }
