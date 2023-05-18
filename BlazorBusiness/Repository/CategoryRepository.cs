@@ -2,6 +2,7 @@ using AutoMapper;
 using BlazorBusiness.Repository.IRepoository;
 using BlazorDataAccess;
 using BlazorDataAccess.DataAccess;
+using Microsoft.EntityFrameworkCore;
 using ProjectModels;
 
 namespace BlazorBusiness.Repository;
@@ -30,7 +31,9 @@ public class CategoryRepository : ICategoryRepository
         var objFromDb = _db.Categories.FirstOrDefault((c)=>c.Id == objDTO.Id);
         if (objFromDb != null)
         {
-            _db.Categories.Update(_mapper.Map<CategoryDTO, Category>(objDTO));
+            var objCategory = _mapper.Map<CategoryDTO, Category>(objDTO);
+            objFromDb.Name= objCategory.Name;
+            _db.Categories.Update(objFromDb);
             _db.SaveChanges();
             return _mapper.Map<Category, CategoryDTO>(objFromDb);
         }
@@ -39,11 +42,18 @@ public class CategoryRepository : ICategoryRepository
     
     public int Delete(int id)
     {
-        Category category = _mapper.Map<CategoryDTO, Category>(Get(id));
+        
+        var category = _db.Categories.FirstOrDefault(e => e.Id == id);
+        if (category is null)
+        {
+            return -1;
+        }
         _db.Categories.Remove(category);
         _db.SaveChanges();
         return category.Id;
     }
+
+    
     
     public CategoryDTO Get(int id)
     {
