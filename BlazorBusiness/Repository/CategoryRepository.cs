@@ -1,5 +1,5 @@
 using AutoMapper;
-using BlazorBusiness.Repository.IRepoository;
+using BlazorBusiness.Repository.IRepository;
 using BlazorDataAccess;
 using BlazorDataAccess.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -18,17 +18,17 @@ public class CategoryRepository : ICategoryRepository
         _mapper = mapper;
     }
     
-    public CategoryDTO Create(CategoryDTO objDTO)
+    public async Task<CategoryDTO> Create(CategoryDTO objDTO)
     {
         var obj = _mapper.Map<CategoryDTO, Category>(objDTO);
         var addedObj = _db.Categories.Add(obj);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
         return _mapper.Map<Category, CategoryDTO>(addedObj.Entity);
     }
     
-    public CategoryDTO Update(CategoryDTO objDTO)
+    public async Task<CategoryDTO> Update(CategoryDTO objDTO)
     {
-        var objFromDb = _db.Categories.FirstOrDefault((c)=>c.Id == objDTO.Id);
+        var objFromDb = await _db.Categories.FirstOrDefaultAsync((c)=>c.Id == objDTO.Id);
         if (objFromDb != null)
         {
             var objCategory = _mapper.Map<CategoryDTO, Category>(objDTO);
@@ -40,24 +40,24 @@ public class CategoryRepository : ICategoryRepository
         return objDTO;
     }
     
-    public int Delete(int id)
+    public async Task<int> Delete(int id)
     {
         
-        var category = _db.Categories.FirstOrDefault(e => e.Id == id);
+        var category = await _db.Categories.FirstOrDefaultAsync(e => e.Id == id);
         if (category is null)
         {
-            return -1;
+            return 0;
         }
         _db.Categories.Remove(category);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
         return category.Id;
     }
 
     
     
-    public CategoryDTO Get(int id)
+    public async Task<CategoryDTO> Get(int id)
     {
-        var obj = _db.Categories.FirstOrDefault((c)=>c.Id == id);
+        var obj = await _db.Categories.FirstOrDefaultAsync((c)=>c.Id == id);
         if (obj != null)
         {
             return _mapper.Map<Category, CategoryDTO>(obj);
@@ -65,7 +65,7 @@ public class CategoryRepository : ICategoryRepository
         return new CategoryDTO();
     }
     
-    public IEnumerable<CategoryDTO> GetAll()
+    public async Task<IEnumerable<CategoryDTO>> GetAll()
     {
         return _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_db.Categories);
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -11,7 +12,8 @@ namespace blazor_server_dotnet6.Migrations
 
             migrationBuilder.CreateTable(name: "categories", 
                 columns: (table) => new {
-                        Id = table.Column<int>(type: "int", nullable: false),
+                        Id = table.Column<int>(type: "int", nullable: false)
+                            .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                         Name = table.Column<string>(type: "varchar(255)", nullable: false),
                         CreatedDate = table.Column<DateTime>(type: "datetime" , nullable: true)
                 },

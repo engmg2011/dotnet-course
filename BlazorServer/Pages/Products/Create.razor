@@ -1,0 +1,76 @@
+@page "/products/create"
+@using ProjectModels
+@using BlazorBusiness.Repository.IRepository
+@inject IProductRepository _productRepository
+@inject NavigationManager _NavigationManager;
+
+<h3>Create new product</h3>
+
+<div class="mt-3 bg-light p-3 border-1 border">
+        
+    <EditForm Model="_product" OnValidSubmit="CreateProduct">
+        <DataAnnotationsValidator />
+        <div class="form">
+            <div class="row mb-3">
+                <label class="form-label col-sm-4" for="name"> Product Name</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="name" type="text" @bind="_product.Name"
+                           aria-describedby="nameHelp"
+                           placeholder="Product Name" @bind:event="oninput">
+                    <ValidationMessage For="() => _product.Name"></ValidationMessage>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-sm-4" > Product Description</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" type="text" @bind="_product.Description"
+                           aria-describedby="descriptionHelp"
+                           placeholder="Product Description" @bind:event="oninput">
+                           </textarea>
+                    <ValidationMessage For="() => _product.Description"></ValidationMessage>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-sm-4" > Shop Favorite</label>
+                <input type="checkbox" @bind="_product.ShopFavorites">
+                    <ValidationMessage For="() => _product.ShopFavorites"></ValidationMessage>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-sm-4" > Customer Favorite</label>
+                <input type="checkbox" @bind="_product.CustomerFavorites">
+                    <ValidationMessage For="() => _product.CustomerFavorites"></ValidationMessage>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-sm-4" > Color</label>
+                <input type="checkbox" @bind="_product.Color">
+                    <ValidationMessage For="() => _product.Color"></ValidationMessage>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-sm-4" > Image</label>
+                <input type="checkbox" @bind="_product.ImageUrl">
+                    <ValidationMessage For="() => _product.ImageUrl"></ValidationMessage>
+            </div>
+            <div class="row mb-3">
+                <label class="form-label col-sm-4" > Category</label>
+                <input type="checkbox" @bind="_product.CategoryId">
+                    <ValidationMessage For="() => _product.CategoryId"></ValidationMessage>
+            </div>
+            <button class="btn btn-success"> Create</button>
+        </div>
+    </EditForm>
+</div>
+
+ 
+
+@code {
+
+    private ProductDTO _product = new();
+
+    public void CreateProduct()
+    {
+        _productRepository.Create(_product);
+        _NavigationManager.NavigateTo("/categories");
+    }
+    
+
+}

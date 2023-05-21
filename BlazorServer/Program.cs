@@ -1,5 +1,5 @@
 using BlazorBusiness.Repository;
-using BlazorBusiness.Repository.IRepoository;
+using BlazorBusiness.Repository.IRepository;
 using BlazorDataAccess.DataAccess;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -15,15 +15,16 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
         // "Server=localhost;Port=3306;Database=BlazorServer;Uid=admin;Pwd=123456;"
-        // options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
-        var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
-        options.UseMySql("Server=localhost;Port=3306;Database=BlazorServer;Uid=admin;Pwd=123456;",serverVersion)
-            .LogTo(Console.WriteLine, LogLevel.Information)
-            .EnableSensitiveDataLogging()
-            .EnableDetailedErrors();
+        options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
+        // var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
+        // options.UseMySql("Server=localhost;Port=3306;Database=BlazorServer;Uid=admin;Pwd=123456;",serverVersion)
+        //     .LogTo(Console.WriteLine, LogLevel.Information)
+        //     .EnableSensitiveDataLogging()
+        //     .EnableDetailedErrors();
     }
 );
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 

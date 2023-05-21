@@ -1,5 +1,5 @@
 using BlazorBusiness.Repository;
-using BlazorBusiness.Repository.IRepoository;
+using BlazorBusiness.Repository.IRepository;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WebAssemplyApp;

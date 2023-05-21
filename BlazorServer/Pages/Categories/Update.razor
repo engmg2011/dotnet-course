@@ -1,6 +1,6 @@
 @page "/categories/{Id}"
 @using ProjectModels
-@using BlazorBusiness.Repository.IRepoository
+@using BlazorBusiness.Repository.IRepository
 @inject ICategoryRepository _categoryRepository
 @inject NavigationManager _NavigationManager;
 
@@ -33,9 +33,9 @@
     
     private CategoryDTO _category = new();
 
-    protected override void OnInitialized()
-    {
-        _category = _categoryRepository.Get(Convert.ToInt32(Id));
+    protected override async void OnInitialized()
+    { 
+        _category = await _categoryRepository.Get(Convert.ToInt32(Id)); 
     }
 
     public void UpdateCategory()
