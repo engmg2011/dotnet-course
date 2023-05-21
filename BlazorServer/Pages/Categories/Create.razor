@@ -32,9 +32,9 @@
 
     private CategoryDTO _category = new();
 
-    public void CreateCategory()
+    public async void CreateCategory()
     {
-        _categoryRepository.Create(_category);
+        await _categoryRepository.Create(_category);
         _NavigationManager.NavigateTo("/categories");
     }
     

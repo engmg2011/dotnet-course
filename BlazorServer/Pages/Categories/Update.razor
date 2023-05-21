@@ -33,14 +33,14 @@
     
     private CategoryDTO _category = new();
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     { 
         _category = await _categoryRepository.Get(Convert.ToInt32(Id)); 
     }
 
-    public void UpdateCategory()
+    public async void UpdateCategory()
     {
-        _categoryRepository.Update(_category);
+        await _categoryRepository.Update(_category);
         _NavigationManager.NavigateTo("/categories");
     }
 

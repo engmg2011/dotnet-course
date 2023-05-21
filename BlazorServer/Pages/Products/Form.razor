@@ -1,0 +1,91 @@
+@using ProjectModels
+@using BlazorBusiness.Repository.IRepository
+@inject ICategoryRepository _CategoryRepository;
+<h3>Form</h3>
+ 
+
+<div class="mt-3 bg-light p-3 border-1 border">
+    <div class="row">
+        <div class="col-lg-8">
+            <EditForm Model="_product" OnValidSubmit="async ()=> await OnValidSubmit.InvokeAsync()">
+                <DataAnnotationsValidator/>
+                <div class="form">
+                    <div class="row mb-3">
+                        <label class="form-label col-sm-4" for="name"> Product Name</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="name" type="text" @bind="_product.Name"
+                                   aria-describedby="nameHelp"
+                                   placeholder="Product Name" @bind:event="oninput">
+                            <ValidationMessage For="() => _product.Name"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label col-sm-4"> Product Description</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" type="text" @bind="_product.Description"
+                           aria-describedby="descriptionHelp"
+                           placeholder="Product Description" @bind:event="oninput">
+                           </textarea>
+                            <ValidationMessage For="() => _product.Description"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label class="form-label col-sm-6"> Shop Favorite</label>
+                            <input type="checkbox" @bind="_product.ShopFavorites">
+                            <ValidationMessage For="() => _product.ShopFavorites"></ValidationMessage>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="form-label col-sm-6"> Customer Favorite</label>
+                            <input type="checkbox" @bind="_product.CustomerFavorites">
+                            <ValidationMessage For="() => _product.CustomerFavorites"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label col-sm-4"> Color</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" @bind="_product.Color">
+                            <ValidationMessage For="() => _product.Color"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label col-sm-4"> Image</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" @bind="_product.ImageUrl">
+                            <ValidationMessage For="() => _product.ImageUrl"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label col-sm-4"> Category</label>
+                        <div class="col-sm-8">
+                            <select class="form-control col-sm-4" @bind="_product.CategoryId">
+                                <option value="0">Select Category ...</option>
+                                @if (Categories != null)
+                                {
+                                    @foreach (var cat in Categories)
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
+                                }
+                            </select>
+                            <ValidationMessage For="() => _product.CategoryId"></ValidationMessage>
+                        </div>
+                    </div>
+            
+                    <button class="btn btn-success"> Create</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] 
+    public ProductDTO _product { get; set; }
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+    
+    [Parameter]
+    public IEnumerable<CategoryDTO> Categories { get; set; }
+}

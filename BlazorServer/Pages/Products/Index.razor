@@ -1,19 +1,21 @@
-@page "/categories"
-@using BlazorBusiness.Repository.IRepository
+@page "/products"
 @using ProjectModels
+@using BlazorBusiness.Repository.IRepository
 @inject IProductRepository _ProductRepository;
 @inject NavigationManager _NavigationManager;
 
-<a href="/categories/create" class="btn btn-outline-primary float-end"> Create Product</a>
+<a href="/products/create" class="btn btn-outline-primary float-end"> Create Product</a>
 
-<h3>Categories list</h3>
- 
+<h3>Products list</h3>
 
-@if (_Categories == null)
+
+@if (_Products == null)
 {
     <div class="w-100 m-2">
-        <div  class="w-100 text-center m-2">
-            <p><b>Loading...</b></p>
+        <div class="w-100 text-center m-2">
+            <p>
+                <b>Loading...</b>
+            </p>
             <div class="spinner-border text-primary" role="status">
                 <span class="sr-only"> </span>
             </div>
@@ -31,18 +33,18 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var product in _Categories)
+        @foreach (var product in _Products)
         {
             <tr>
                 <td>@product.Id</td>
                 <td>@product.Name</td>
                 <td>
-                    <a href="/categories/@product.Id" class="btn btn-primary">Edit</a>
-                    <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#product-@product.Id">Delete</button>
+                    <a href="/products/@product.Id" class="btn btn-primary">Edit</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#product-@product.Id">Delete</button>
                 </td>
-                 
+
                 <!-- Modal -->
-                <DeleteConfirm product="product" GetData="GetData"></DeleteConfirm>
+                @* <DeleteConfirm product="product" GetData="GetData"></DeleteConfirm> *@
             </tr>
         }
         </tbody>
@@ -51,8 +53,8 @@ else
 
 
 @code {
-    public IEnumerable<ProductDTO> _Categories ;
-    
+    public IEnumerable<ProductDTO> _Products;
+
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(GetData);
@@ -60,7 +62,7 @@ else
 
     protected void GetData()
     {
-        _Categories = _ProductRepository.GetAll();
+        _Products = _ProductRepository.GetAll();
     }
 
 }
