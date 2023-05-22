@@ -69,6 +69,6 @@ public class ProductRepository : IProductRepository
     
     public IEnumerable<ProductDTO> GetAll()
     {
-        return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_db.Products);
+        return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_db.Products.Include(b=>b.Category));
     }
 }

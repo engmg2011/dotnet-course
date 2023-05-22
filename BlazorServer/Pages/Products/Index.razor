@@ -1,6 +1,7 @@
 @page "/products"
 @using ProjectModels
 @using BlazorBusiness.Repository.IRepository
+@using BlazorDataAccess.DataAccess
 @inject IProductRepository _ProductRepository;
 @inject NavigationManager _NavigationManager;
 @inject IWebHostEnvironment _HostEnvironment;
@@ -31,6 +32,8 @@ else
             <th>ID</th>
             <th>Product name</th>
             <th>Product image</th>
+            <th>Category</th>
+            <th>Customer favourite</th>
             <th>Operations</th>
         </tr>
         </thead>
@@ -46,7 +49,12 @@ else
                         <img class="img-thumbnail" src="@product.ImageUrl" style="max-height: 80px;" />
                     }
                 </td>
-
+                <td>
+                    @product.Category?.Name
+                </td>
+                <td>
+                    <input type="checkbox" disabled="disabled" @bind="product.CustomerFavorites">
+                </td>
                 <td width="300">
                     <a href="/products/@product.Id" class="btn btn-primary">Edit</a>
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#product-@product.Id">Delete</button>
