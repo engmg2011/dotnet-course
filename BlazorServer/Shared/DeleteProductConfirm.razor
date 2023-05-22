@@ -5,7 +5,7 @@
 @if (product != null)
 {
         
-    <div class="modal fade" id="category-@product.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="product-@product.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,9 +31,9 @@
     [Parameter]
     public EventCallback GetData { get; set; }
     
-    private void Delete(int Id)
+    private async void Delete(int Id)
     {
-        _ProductRepository.Delete(Id);
+        await _ProductRepository.Delete(Id);
         GetData.InvokeAsync();
     }
     
