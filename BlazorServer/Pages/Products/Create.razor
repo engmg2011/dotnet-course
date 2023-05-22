@@ -11,7 +11,10 @@
 
 @code {
 
-    private readonly ProductDTO _product = new();
+    private readonly ProductDTO _product = new()
+    {
+        ImageUrl = "images/default.png"
+    };
 
     public async void CreateProduct()
     {
