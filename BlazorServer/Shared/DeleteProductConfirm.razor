@@ -1,0 +1,41 @@
+@using ProjectModels
+@using BlazorBusiness.Repository.IRepository
+@inject IProductRepository _ProductRepository;
+
+@if (product != null)
+{
+        
+    <div class="modal fade" id="category-@product.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    This will delete the category. Are you sure ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" @onclick="() => Delete(product.Id)"  data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    
+    [Parameter]
+    public ProductDTO product { get; set; }
+    
+    [Parameter]
+    public EventCallback GetData { get; set; }
+    
+    private void Delete(int Id)
+    {
+        _ProductRepository.Delete(Id);
+        GetData.InvokeAsync();
+    }
+    
+
+}

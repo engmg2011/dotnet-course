@@ -1,6 +1,12 @@
 @using ProjectModels
 @using BlazorBusiness.Repository.IRepository
+@using System.Runtime.CompilerServices
+@using BlazorServer.Service.IService
 @inject ICategoryRepository _CategoryRepository;
+@inject IFileUpload _FileUpload;
+@inject IJSRuntime _JsRuntime;
+
+
 <h3>Form</h3>
  
 
@@ -49,13 +55,6 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="form-label col-sm-4"> Image</label>
-                        <div class="col-sm-6">
-                            <input class="form-control" type="text" @bind="_product.ImageUrl">
-                            <ValidationMessage For="() => _product.ImageUrl"></ValidationMessage>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
                         <label class="form-label col-sm-4"> Category</label>
                         <div class="col-sm-8">
                             <select class="form-control col-sm-4" @bind="_product.CategoryId">
@@ -70,9 +69,29 @@
                             </select>
                             <ValidationMessage For="() => _product.CategoryId"></ValidationMessage>
                         </div>
+                            
+                    </div> 
+                    <div class="row mb-3">
+                        <label class="form-label col-sm-4"> Image</label>
+                        <div class="col-sm-6">
+                            <ValidationMessage For="() => _product.ImageUrl"></ValidationMessage>
+                        </div>
                     </div>
-            
+                    <div class="row mb-3">
+                    <label class="form-label col-sm-4" for="name"> Product Image</label>
+                    <div class="col-sm-4">
+                        <InputFile OnChange="HandleImageUpload" />
+                        @* <input class="form-control" id="name" type="text" @bind="_product.Name" *@
+                        @*        aria-describedby="nameHelp" *@
+                        @*        placeholder="Product Name" @bind:event="oninput"> *@
+                        <input class="form-control" type="hidden" @bind="_product.ImageUrl">
+                        <ValidationMessage For="() => _product.ImageUrl"></ValidationMessage>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="@_product.ImageUrl" width="100"/>
+                    </div>
                     <button class="btn btn-success"> Create</button>
+                </div>
                 </div>
             </EditForm>
         </div>
@@ -80,6 +99,7 @@
 </div>
 
 @code {
+    
     [Parameter] 
     public ProductDTO _product { get; set; }
 
@@ -88,4 +108,34 @@
     
     [Parameter]
     public IEnumerable<CategoryDTO> Categories { get; set; }
+    
+    private async Task HandleImageUpload(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            if (e.GetMultipleFiles().Count > 0)
+            {
+                foreach (var file in e.GetMultipleFiles())
+                {
+                    System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
+                    if (fileInfo.Extension.ToLower() == ".jpg" ||
+                        fileInfo.Extension.ToLower() == ".jpeg" ||
+                        fileInfo.Extension.ToLower() == ".png")
+                    {
+                        _product.ImageUrl = await _FileUpload.UploadFile(file);
+                        Console.WriteLine("Image uploaded " + _product.ImageUrl );
+                    }
+                    else
+                    {
+                        await _JsRuntime.Swal("info","Please select a valid image", " Supported types JPG/JPEG/PNG");
+                    }
+                }
+            }
+        }
+        catch (Exception err)
+        {
+            await _JsRuntime.Swal("error", "Error occured",err.Message);
+        }
+
+    }
 }

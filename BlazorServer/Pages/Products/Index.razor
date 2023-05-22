@@ -3,6 +3,7 @@
 @using BlazorBusiness.Repository.IRepository
 @inject IProductRepository _ProductRepository;
 @inject NavigationManager _NavigationManager;
+@inject IWebHostEnvironment _HostEnvironment;
 
 <a href="/products/create" class="btn btn-outline-primary float-end"> Create Product</a>
 
@@ -29,6 +30,7 @@ else
         <tr>
             <th>ID</th>
             <th>Product name</th>
+            <th>Product image</th>
             <th>Operations</th>
         </tr>
         </thead>
@@ -36,15 +38,21 @@ else
         @foreach (var product in _Products)
         {
             <tr>
-                <td>@product.Id</td>
+                <td width="100">@product.Id</td>
                 <td>@product.Name</td>
-                <td>
+                <td width="200">
+                    @if (File.Exists( _HostEnvironment.WebRootPath +"/"+ product.ImageUrl))
+                    {
+                        <img class="img-thumbnail" src="@product.ImageUrl" style="max-height: 80px;" />
+                    }
+                </td>
+
+                <td width="300">
                     <a href="/products/@product.Id" class="btn btn-primary">Edit</a>
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#product-@product.Id">Delete</button>
                 </td>
-
                 <!-- Modal -->
-                @* <DeleteConfirm product="product" GetData="GetData"></DeleteConfirm> *@
+                <DeleteProductConfirm product="product" GetData="GetData"></DeleteProductConfirm>
             </tr>
         }
         </tbody>
