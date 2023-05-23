@@ -67,8 +67,8 @@ public class ProductRepository : IProductRepository
         return new ProductDTO();
     }
     
-    public IEnumerable<ProductDTO> GetAll()
+    public async Task<IEnumerable<ProductDTO>> GetAll()
     {
-        return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_db.Products.Include(b=>b.Category));
+        return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>( _db.Products.Include(b => b.Category));
     }
 }

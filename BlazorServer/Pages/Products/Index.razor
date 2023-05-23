@@ -76,9 +76,9 @@ else
         await Task.Run(GetData);
     }
 
-    protected void GetData()
+    protected async void GetData()
     {
-        _Products = _ProductRepository.GetAll();
+        _Products = await _ProductRepository.GetAll();
     }
 
 }

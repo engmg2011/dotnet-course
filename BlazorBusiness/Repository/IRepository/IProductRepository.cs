@@ -12,5 +12,5 @@ public interface IProductRepository
 
     public Task<ProductDTO> Get(int id);
 
-    public IEnumerable<ProductDTO> GetAll();
+    public Task<IEnumerable<ProductDTO>> GetAll();
 }
