@@ -22,18 +22,26 @@ public class ProductController: ControllerBase
         return Ok(allProducts);
     }
 
-    [HttpGet("/api/Product/{id}")]
-    public async Task<ActionResult> Get(int id)
+    private BadRequestObjectResult InvalidProduct()
     {
-        if (id == null || id == 0)
-        {
-            return BadRequest(new ErrorModelDTO()
+        return BadRequest(new ErrorModelDTO()
             {
                 ErrorMessage = "Invalid Id",
                 StatusCode = StatusCodes.Status400BadRequest
             });
-        }
-        return Ok(await _productRepository.Get(id));
+    }
+    
+    [HttpGet("/api/Product/{id}")]
+    public async Task<ActionResult> Get(int id)
+    {
+        if (id == null || id == 0)
+            return InvalidProduct();
+        
+        ProductDTO _product = await _productRepository.Get(id);
+        if (_product == null)
+            return InvalidProduct();
+        
+        return Ok(_product);
     }
 
 }

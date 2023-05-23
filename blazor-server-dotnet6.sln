@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServer", "BlazorServe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAPI", "BlazorAPI\BlazorAPI.csproj", "{9020E7D6-5311-431F-B7E4-2855D10D2C87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazerWebAssembly", "BlazerWebAssembly\BlazerWebAssembly.csproj", "{60680729-5BC6-420F-99B1-ACE9C6A4CDDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{9020E7D6-5311-431F-B7E4-2855D10D2C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9020E7D6-5311-431F-B7E4-2855D10D2C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9020E7D6-5311-431F-B7E4-2855D10D2C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60680729-5BC6-420F-99B1-ACE9C6A4CDDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60680729-5BC6-420F-99B1-ACE9C6A4CDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60680729-5BC6-420F-99B1-ACE9C6A4CDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60680729-5BC6-420F-99B1-ACE9C6A4CDDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

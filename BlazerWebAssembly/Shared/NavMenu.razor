@@ -1,31 +1,21 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<nav  class="@NavMenuCssClass navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">WebAssemplyApp</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<nav  class="@NavMenuCssClass navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">Blazor project</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
                     <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                         <span class="oi oi-home" aria-hidden="true"></span> Home
-                    </NavLink> 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    </NavLink>
                 </li>
-                <li>  
+                <li class="nav-item">
                     <NavLink class="nav-link" href="products">
                         <span class="oi oi-list-rich" aria-hidden="true"></span> Products Page
                     </NavLink>
-                </li>  
+                </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -33,8 +23,7 @@
             </form>
         </div>
     </div>
-</nav>
- 
+</nav> 
 
 @code {
     private bool collapseNavMenu = true;
@@ -45,5 +34,4 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-
 }
