@@ -5,8 +5,6 @@ VisualStudioVersion = 25.0.1705.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectModels", "ProjectModels\ProjectModels.csproj", "{FB6596C3-2E8E-4712-AE7F-792B496EB33D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAssemplyApp", "WebAssemplyApp\WebAssemplyApp.csproj", "{216C1BDB-D1BF-4508-9A96-510DE46B95FE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCommon", "BlazorCommon\BlazorCommon.csproj", "{EEF9F48E-9E60-442D-86F7-8FCD6A68A373}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBusiness", "BlazorBusiness\BlazorBusiness.csproj", "{904BB101-73A2-418B-A2EA-869A15EF6338}"
@@ -29,10 +27,6 @@ Global
 		{FB6596C3-2E8E-4712-AE7F-792B496EB33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB6596C3-2E8E-4712-AE7F-792B496EB33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB6596C3-2E8E-4712-AE7F-792B496EB33D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{216C1BDB-D1BF-4508-9A96-510DE46B95FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{216C1BDB-D1BF-4508-9A96-510DE46B95FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{216C1BDB-D1BF-4508-9A96-510DE46B95FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{216C1BDB-D1BF-4508-9A96-510DE46B95FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EEF9F48E-9E60-442D-86F7-8FCD6A68A373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EEF9F48E-9E60-442D-86F7-8FCD6A68A373}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEF9F48E-9E60-442D-86F7-8FCD6A68A373}.Release|Any CPU.ActiveCfg = Release|Any CPU

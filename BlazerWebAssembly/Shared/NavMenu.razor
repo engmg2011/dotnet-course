@@ -1,4 +1,7 @@
-﻿<nav  class="@NavMenuCssClass navbar navbar-expand-lg navbar-dark bg-dark">
+﻿@using BlazerWebAssembly.Service.IService
+@inject ICartService _CartService;
+@implements IDisposable;
+<nav  class="@NavMenuCssClass navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Blazor project</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,6 +18,15 @@
                     <NavLink class="nav-link" href="products">
                         <span class="oi oi-list-rich" aria-hidden="true"></span> Products Page
                     </NavLink>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="btn btn-dark position-relative mt-2">
+                       <span class="oi oi-cart" aria-hidden="true"></span> Shopping Cart
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        @totalCount
+                        <span class="visually-hidden">Shopping Cart</span>
+                      </span>
+                    </a>
                 </li>
             </ul>
             <form class="d-flex">
@@ -34,4 +46,29 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    private int totalCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetCartCount();
+        _CartService.OnChange += StateHasChanged;
+    }
+
+    // protected override void OnInitialized()
+    // {
+    //     _CartService.OnChange += StateHasChanged;
+    // }
+
+    public void Dispose()
+    {
+        _CartService.OnChange -= StateHasChanged;
+    }
+
+    public async Task GetCartCount()
+    {
+        totalCount  = await _CartService.TotalCount();
+        StateHasChanged();
+    }
+
 }

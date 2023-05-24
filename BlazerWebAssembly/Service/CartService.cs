@@ -8,6 +8,8 @@ namespace BlazerWebAssembly.Service;
 public class CartService: ICartService
 {
     private readonly ILocalStorageService _localStorage;
+    public event Action OnChange;
+    
     public CartService(ILocalStorageService localStorage)
     {
         _localStorage = localStorage;
@@ -16,6 +18,7 @@ public class CartService: ICartService
     async Task SetCartItems(List<ShoppingCartProduct> list)
     {
         await _localStorage.SetItemAsync(SD.ShoppingCart, list);
+        OnChange.Invoke();
     }
 
     async Task<List<ShoppingCartProduct>> GetCartItems()
@@ -63,5 +66,18 @@ public class CartService: ICartService
         if(!found)
             products.Add(product);
         await SetCartItems(products);
+    }
+
+    public async Task<int> TotalCount()
+    {
+        int totalCount = 0;
+        var items = await _localStorage.GetItemAsync<List<ShoppingCartProduct>>(SD.ShoppingCart);
+        List<ShoppingCartProduct> products = await GetCartItems();
+        bool found = false;
+        for ( int i =0; i< products.Count; i++)
+        {
+            totalCount += products[i].Count;
+        }
+        return totalCount;
     }
 }
