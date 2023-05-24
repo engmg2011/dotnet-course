@@ -1,27 +1,64 @@
 @page "/products"
-@using ProjectModels
+@using BlazerWebAssembly.Service.IService
+@using BlazerWebAssembly.ViewModels
+@inject IProductService _ProductService;
+@inject IConfiguration _Configuration;
+@inject ICartService _CartService;
 
-<h3>Products</h3>
+<h3>Products List</h3>
+<div class="row">
 
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="images/default-img.png" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
+    @if (_products.Count() > 0)
+    {
+        @foreach (var sProduct in _products)
+        {
+            <div id="product-@sProduct.ProductId" class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                <div class="card">
+                    <img class="card-img-top" src="@(sProduct.Product.ImageUrl != "" ? _Configuration.GetValue<string>("BaseServerUrl") + sProduct.Product.ImageUrl : "images/default-img.png")" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@sProduct.Product.Name</h5>
+                        <p class="card-text">@sProduct.Product.Description</p>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" type="number" min="1" @bind="sProduct.Count">
+                            </div>
+                            <div class="col-8">
+                                <button @onclick="() => AddToCart(sProduct)" class="btn btn-success w-100">Add to cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
 
 
-    
-
 @code {
 
-    IEnumerable<ProductDTO> _products = new List<ProductDTO>();
-    
-    
-    
-    
+    bool _isLoading = false;
+    List<ShoppingCartProduct> _products = new List<ShoppingCartProduct>();
 
+
+    protected async override Task OnInitializedAsync()
+    {
+        _isLoading = true;
+        var pageProducts = await _ProductService.GetAll();
+        foreach (var pageProduct in pageProducts)
+        {
+            ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct();
+            shoppingCartProduct.Product = pageProduct;
+            shoppingCartProduct.ProductId = pageProduct.Id;
+            shoppingCartProduct.Count = 1;
+            _products.Add(shoppingCartProduct);
+        }
+        Console.WriteLine(_products);
+    }
+
+
+    private async Task AddToCart(ShoppingCartProduct product)
+    {
+        await _CartService.IncrementCart(product);
+    }
 
 }
