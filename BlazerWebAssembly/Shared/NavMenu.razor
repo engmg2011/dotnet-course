@@ -1,5 +1,6 @@
 ﻿@using BlazerWebAssembly.Service.IService
-@inject ICartService _CartService;
+@using BlazerWebAssembly.Service
+@inject CartService _CartService;
 @implements IDisposable;
 <nav  class="@NavMenuCssClass navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -21,11 +22,11 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="btn btn-dark position-relative mt-2">
-                       <span class="oi oi-cart" aria-hidden="true"></span> Shopping Cart
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        @totalCount
-                        <span class="visually-hidden">Shopping Cart</span>
-                      </span>
+                        <span class="oi oi-cart" aria-hidden="true"></span> Shopping Cart
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            @_CartService.TotalCount
+                            <span class="visually-hidden">Shopping Cart</span>
+                        </span>
                     </a>
                 </li>
             </ul>
@@ -37,7 +38,16 @@
     </div>
 </nav> 
 
+Values: Ch1
+@foreach (var value in _CartService.ValuesList)
+{
+    <p>@value</p>
+}
+
+
 @code {
+
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -49,26 +59,23 @@
 
     private int totalCount = 0;
 
-    protected override async Task OnInitializedAsync()
+    protected override  async Task OnInitializedAsync()
     {
-        await GetCartCount();
-        _CartService.OnChange += StateHasChanged;
+        await _CartService.UpdateTotalCount();
+        _CartService.OnChange += OnNotify;
     }
 
-    // protected override void OnInitialized()
-    // {
-    //     _CartService.OnChange += StateHasChanged;
-    // }
+    public async Task OnNotify()
+    {
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
 
     public void Dispose()
     {
-        _CartService.OnChange -= StateHasChanged;
-    }
-
-    public async Task GetCartCount()
-    {
-        totalCount  = await _CartService.TotalCount();
-        StateHasChanged();
-    }
+        _CartService.OnChange -= OnNotify;
+    } 
 
 }

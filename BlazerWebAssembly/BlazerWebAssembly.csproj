@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazored.LocalStorage" Version="4.1.5" />
+    <PackageReference Include="Blazored.LocalStorage" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -17,6 +17,13 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorCommon\BlazorCommon.csproj" />
     <ProjectReference Include="..\ProjectModels\ProjectModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Data\Child1.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Data\Child2.razor" />
+    <_ContentIncludedByDefault Remove="Data\Child1.razor" />
+    <_ContentIncludedByDefault Remove="Data\Child2.razor" />
   </ItemGroup>
 
 </Project>

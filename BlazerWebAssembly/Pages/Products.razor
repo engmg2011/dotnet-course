@@ -1,9 +1,10 @@
 @page "/products"
 @using BlazerWebAssembly.Service.IService
 @using BlazerWebAssembly.ViewModels
+@using BlazerWebAssembly.Service
 @inject IProductService _ProductService;
 @inject IConfiguration _Configuration;
-@inject ICartService _CartService;
+@inject CartService _CartService;
 
 <h3>Products List</h3>
 <div class="row">
@@ -52,7 +53,6 @@
             shoppingCartProduct.Count = 1;
             _products.Add(shoppingCartProduct);
         }
-        Console.WriteLine(_products);
     }
 
 

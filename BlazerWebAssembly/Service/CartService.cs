@@ -5,10 +5,24 @@ using Blazored.LocalStorage;
 
 namespace BlazerWebAssembly.Service;
 
-public class CartService: ICartService
+public class CartService
 {
+    
+    private readonly List<string> values = new List<string>();
+    public IReadOnlyList<string> ValuesList => values;
+    public int TotalCount = 0;
+ 
+
+    public async Task AddTolist(string value)
+    {
+        values.Add(value);
+        await UpdateTotalCount();
+        await OnChange?.Invoke();
+    }
+ 
+    
     private readonly ILocalStorageService _localStorage;
-    public event Action OnChange;
+    public event Func<Task>  OnChange;
     
     public CartService(ILocalStorageService localStorage)
     {
@@ -18,7 +32,8 @@ public class CartService: ICartService
     async Task SetCartItems(List<ShoppingCartProduct> list)
     {
         await _localStorage.SetItemAsync(SD.ShoppingCart, list);
-        OnChange.Invoke();
+        await UpdateTotalCount();
+        OnChange?.Invoke();
     }
 
     async Task<List<ShoppingCartProduct>> GetCartItems()
@@ -68,7 +83,7 @@ public class CartService: ICartService
         await SetCartItems(products);
     }
 
-    public async Task<int> TotalCount()
+    public async Task UpdateTotalCount()
     {
         int totalCount = 0;
         var items = await _localStorage.GetItemAsync<List<ShoppingCartProduct>>(SD.ShoppingCart);
@@ -77,7 +92,8 @@ public class CartService: ICartService
         for ( int i =0; i< products.Count; i++)
         {
             totalCount += products[i].Count;
-        }
-        return totalCount;
+        } 
+        TotalCount = totalCount;
     }
+
 }

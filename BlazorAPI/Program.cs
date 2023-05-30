@@ -23,12 +23,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
-        // "Server=localhost;Port=3306;Database=BlazorServer;Uid=admin;Pwd=123456;"
-        // options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
-        options.UseMySql("Server=localhost;Port=3306;Database=BlazorServer;Uid=admin;Pwd=123456;",
+        options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                 serverVersion, 
-                builder => builder.MigrationsAssembly("BlazorServer"))
+                builder => builder.MigrationsAssembly("BlazorBackend"))
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging()
             .EnableDetailedErrors();
@@ -51,6 +49,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
