@@ -3,6 +3,7 @@
 @using ProjectModels
 @inject ICategoryRepository _CategoryRepository;
 @inject NavigationManager _NavigationManager;
+@attribute [Authorize]
 
 <a href="/categories/create" class="btn btn-outline-primary float-end"> Create Category</a>
 

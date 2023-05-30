@@ -5,6 +5,7 @@
 @inject IProductRepository _ProductRepository;
 @inject NavigationManager _NavigationManager;
 @inject IWebHostEnvironment _HostEnvironment;
+@attribute [Authorize]
 
 <a href="/products/create" class="btn btn-outline-primary float-end"> Create Product</a>
 

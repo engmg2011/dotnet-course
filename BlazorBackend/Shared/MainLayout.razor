@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Identity
+@inherits LayoutComponentBase
 
 <PageTitle>BlazorBackend</PageTitle>
 
@@ -9,7 +10,19 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            
+            <AuthorizeView>
+                <Authorized>
+                    Hello @context.User.Identity.Name
+                    <a href="/Identity/Account/Logout">Logout</a>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/Identity/Account/Register" >Register</a>
+                    <a href="/Identity/Account/Login" >Login</a>
+                </NotAuthorized>
+            </AuthorizeView>
+            
+            
         </div>
 
         <article class="content px-4">
