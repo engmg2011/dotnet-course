@@ -1,0 +1,77 @@
+@page "/Cart"
+@using BlazerWebAssembly.Service.IService
+@using BlazerWebAssembly.ViewModels
+@using ProjectModels
+@inject ICartService _CartService;
+@inject IConfiguration _Configuration;
+<h3>Cart Page</h3>
+
+
+<table class="table table-hover">
+   <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Item image</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Count</th>
+        <th scope="col">Operation</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    @if (CartItems.Count > 0)
+    {
+        @foreach (var item in CartItems)
+        {
+            <tr>
+                <th scope="row">@item.Product.Id</th>
+                <td><img 
+                         src="@(item.Product.ImageUrl != "" ? 
+                                  _Configuration.GetValue<string>("BaseServerUrl") + item.Product.ImageUrl : 
+                                  "images/default-img.png")"  
+                         width="80" alt=""/></td>
+                <td><b>@item.Product.Name</b></td>
+                <td>
+                    <button class="btn btn-warning btn-sm" @onclick="()=>Decrement(item)"> - </button>
+                    <span class="mx-3"> @item.Count </span>
+                    <button class="btn btn-success btn-sm" @onclick="()=>Increment(item)"> + </button>
+                </td>
+                <td><button class="btn btn-danger btn-sm" @onclick="()=>RemoveItem(item)"> x </button></td>
+            </tr> 
+        }
+    }
+    </tbody>
+</table>
+
+@code {
+
+    List<ShoppingCartProduct> CartItems { get; set; } = new List<ShoppingCartProduct>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CartItems = await _CartService.GetCartItems();
+    }
+
+    public async Task RemoveItem(ShoppingCartProduct product)
+    {
+        await _CartService.RemoveFromCart(product);
+        await OnInitializedAsync();
+    }
+    
+    public async Task Increment(ShoppingCartProduct product)
+    {
+        ShoppingCartProduct newProduct = new ShoppingCartProduct();
+        newProduct.ProductId = product.ProductId;
+        newProduct.Product = product.Product;
+        newProduct.Count = 1;
+        await _CartService.AddToCart(newProduct);
+        await OnInitializedAsync();
+    }
+
+
+    public async Task Decrement(ShoppingCartProduct product)
+    {
+        await _CartService.DecrementCart(product);
+        await OnInitializedAsync();
+    }
+}

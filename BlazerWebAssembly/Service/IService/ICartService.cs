@@ -9,8 +9,12 @@ public interface ICartService
     Task AddToCart(ShoppingCartProduct product);
 
     Task RemoveFromCart(ShoppingCartProduct product);
+    
+    Task DecrementCart(ShoppingCartProduct product);
 
     public int TotalCount  { get; set; } 
     
-    Task UpdateTotalCount(); 
+    Task UpdateTotalCount();
+
+    Task<List<ShoppingCartProduct>> GetCartItems();
 }

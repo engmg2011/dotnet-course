@@ -31,13 +31,13 @@ public class CartService: ICartService
         OnChange?.Invoke();
     }
 
-    async Task<List<ShoppingCartProduct>> GetCartItems()
+    public async Task<List<ShoppingCartProduct>> GetCartItems()
     {
         var items = await _localStorage.GetItemAsync<List<ShoppingCartProduct>>(SD.ShoppingCart);
         return items ?? new List<ShoppingCartProduct>();
     }
 
-    public async Task RemoveFromCart(ShoppingCartProduct product)
+    public async Task DecrementCart(ShoppingCartProduct product)
     {
         List<ShoppingCartProduct> products = await GetCartItems();
         List<ShoppingCartProduct> newList = new List<ShoppingCartProduct>();
@@ -46,16 +46,26 @@ public class CartService: ICartService
             bool shouldRemove = false;
             if (products[i].ProductId == product.ProductId)
             {
-                if (products[i].Count > 1)
-                    products[i].Count--;
-                else
-                    shouldRemove = true;
+                if (products[i].Count > 1) products[i].Count--;
+                else shouldRemove = true;
             }
             else
             {
                 Console.WriteLine("Trying to remove not existed product");
             }
             if(!shouldRemove) 
+                newList.Add(products[i]);
+        }
+        await SetCartItems(newList);
+    }
+    
+    public async Task RemoveFromCart(ShoppingCartProduct product)
+    {
+        List<ShoppingCartProduct> products = await GetCartItems();
+        List<ShoppingCartProduct> newList = new List<ShoppingCartProduct>();
+        for ( int i =0; i< products.Count; i++)
+        {
+            if(products[i].ProductId != product.ProductId) 
                 newList.Add(products[i]);
         }
         await SetCartItems(newList);
