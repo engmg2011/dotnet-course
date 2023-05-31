@@ -6,5 +6,5 @@ public interface IProductService
 {
     Task<ProductDTO> Get(int id);
 
-    Task<IEnumerable<ProductDTO>> GetAll();
+    Task<IEnumerable<ProductDTO>?> GetAll();
 }

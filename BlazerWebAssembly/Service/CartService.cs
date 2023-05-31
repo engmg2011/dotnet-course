@@ -5,19 +5,14 @@ using Blazored.LocalStorage;
 
 namespace BlazerWebAssembly.Service;
 
-public class CartService
+public class CartService: ICartService
 {
-    
-    private readonly List<string> values = new List<string>();
-    public IReadOnlyList<string> ValuesList => values;
-    public int TotalCount = 0;
- 
 
-    public async Task AddTolist(string value)
+    public int TotalCount { get; set; } = 0; 
+    
+    public int GetTotalCount()
     {
-        values.Add(value);
-        await UpdateTotalCount();
-        await OnChange?.Invoke();
+        return TotalCount;
     }
  
     
@@ -42,7 +37,7 @@ public class CartService
         return items ?? new List<ShoppingCartProduct>();
     }
 
-    public async Task DecrementCart(ShoppingCartProduct product)
+    public async Task RemoveFromCart(ShoppingCartProduct product)
     {
         List<ShoppingCartProduct> products = await GetCartItems();
         List<ShoppingCartProduct> newList = new List<ShoppingCartProduct>();
@@ -66,7 +61,7 @@ public class CartService
         await SetCartItems(newList);
     }
 
-    public async Task IncrementCart(ShoppingCartProduct product)
+    public async Task AddToCart(ShoppingCartProduct product)
     {
         List<ShoppingCartProduct> products = await GetCartItems();
         bool found = false;
@@ -86,13 +81,10 @@ public class CartService
     public async Task UpdateTotalCount()
     {
         int totalCount = 0;
-        var items = await _localStorage.GetItemAsync<List<ShoppingCartProduct>>(SD.ShoppingCart);
         List<ShoppingCartProduct> products = await GetCartItems();
         bool found = false;
         for ( int i =0; i< products.Count; i++)
-        {
             totalCount += products[i].Count;
-        } 
         TotalCount = totalCount;
     }
 

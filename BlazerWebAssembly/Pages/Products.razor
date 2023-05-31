@@ -2,9 +2,10 @@
 @using BlazerWebAssembly.Service.IService
 @using BlazerWebAssembly.ViewModels
 @using BlazerWebAssembly.Service
+@using ProjectModels
 @inject IProductService _ProductService;
 @inject IConfiguration _Configuration;
-@inject CartService _CartService;
+@inject ICartService _CartService;
 
 <h3>Products List</h3>
 <div class="row">
@@ -58,7 +59,7 @@
 
     private async Task AddToCart(ShoppingCartProduct product)
     {
-        await _CartService.IncrementCart(product);
+        await _CartService.AddToCart(product);
     }
 
 }

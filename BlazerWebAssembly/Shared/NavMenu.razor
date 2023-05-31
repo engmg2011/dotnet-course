@@ -1,6 +1,6 @@
 ﻿@using BlazerWebAssembly.Service.IService
 @using BlazerWebAssembly.Service
-@inject CartService _CartService;
+@inject ICartService _CartService;
 @implements IDisposable;
 <nav  class="@NavMenuCssClass navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -37,13 +37,6 @@
         </div>
     </div>
 </nav> 
-
-Values: Ch1
-@foreach (var value in _CartService.ValuesList)
-{
-    <p>@value</p>
-}
-
 
 @code {
 
