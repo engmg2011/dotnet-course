@@ -1,5 +1,6 @@
 ﻿@page
-@inject SignInManager<IdentityUser>  _SignInManager;
+@using BlazorDataAccess
+@inject SignInManager<ApplicationUser>  _SignInManager;
 @{
     ViewData["Title"] = "Log out";
 }

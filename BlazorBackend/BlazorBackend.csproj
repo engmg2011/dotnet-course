@@ -29,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="Areas\Identity\Pages\Shared\_Layout.cshtml" />
+    <AdditionalFiles Include="Areas\Identity\Pages\Shared\_LoginPartial.cshtml" />
+    <AdditionalFiles Include="Areas\Identity\Pages\Shared\_ValidationScriptsPartial.cshtml" />
     <AdditionalFiles Include="Pages\Categories\Update.razor" />
     <AdditionalFiles Include="Pages\Products\Create.razor" />
     <AdditionalFiles Include="Pages\Products\Form.razor" />
@@ -37,6 +40,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\product\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Shared\_LoginPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
 
 </Project>
