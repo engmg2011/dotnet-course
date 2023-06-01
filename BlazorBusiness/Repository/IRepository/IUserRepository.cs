@@ -10,7 +10,7 @@ public interface IUserRepository
 
     public Task<ApplicationUser> Update(ApplicationUser objDTO);
 
-    public Task<int> Delete(int id);
+    public Task<string> Delete(string id);
 
     public Task<ApplicationUser> Get(string id);
     

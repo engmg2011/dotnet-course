@@ -1,0 +1,72 @@
+@page "/users"
+@using BlazorDataAccess
+@using BlazorBusiness.Repository.IRepository
+@inject IUserRepository _UserRepository;
+
+<h3>Users List</h3> 
+
+@if (_users == null)
+{
+    <div class="w-100 m-2">
+        <div class="w-100 text-center m-2">
+            <p>
+                <b>Loading...</b>
+            </p>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"> </span>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User name</th> 
+            <th>Email</th> 
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in _users)
+        {
+            <tr>
+                <td width="400">@user.Id</td>
+                <td>@user.Name</td> 
+                <td>
+                    @user?.Email
+                </td>
+                <td width="300">
+                    <a href="/users/@user.Id" class="btn btn-primary">Edit</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#entity-@user.Id">Delete</button>
+                </td>
+                <!-- Modal -->
+                <DeleteEntityConfirm entity="user" GetData="GetData" DeleteEntity="()=> Delete(user.Id)"></DeleteEntityConfirm>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    IEnumerable<ApplicationUser>? _users ;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _users = await _UserRepository.GetAll();
+    }
+
+    protected async void GetData()
+    {
+        _users = await _UserRepository.GetAll();
+    }
+
+    protected async void Delete(string id)
+    {
+        await _UserRepository.Delete(id);
+        await this.OnInitializedAsync();
+    }
+
+}

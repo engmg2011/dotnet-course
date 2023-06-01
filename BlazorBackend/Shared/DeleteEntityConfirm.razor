@@ -1,0 +1,40 @@
+@if (entity != null)
+{
+        
+    <div class="modal fade" id="entity-@entity.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    This will delete the category. Are you sure ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" @onclick="async () => await Delete(entity.Id)"  data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    
+    [Parameter]
+    public dynamic entity { get; set; }
+    
+    [Parameter]
+    public EventCallback GetData { get; set; }
+    
+    [Parameter]
+    public EventCallback DeleteEntity { get; set; }
+    
+    private async void Delete(dynamic id)
+    {
+        await DeleteEntity.InvokeAsync(id);
+        await GetData.InvokeAsync();
+    }
+    
+
+}
